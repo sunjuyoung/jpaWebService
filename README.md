@@ -11,8 +11,13 @@
  스프링 데이터 JPA
  
  H2
+ 
  PostgreSQL
+ 
  롬복
+ 
  스프링 mail
+ 
  QueryDSL
+ 
  스프링 부트 devtools

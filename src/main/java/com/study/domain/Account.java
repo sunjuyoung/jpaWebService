@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Getter @Setter @EqualsAndHashCode(of="id")
@@ -27,7 +28,7 @@ public class Account {
 
     private LocalDateTime joinedAt;
 
-    private String bio;
+    private String bio; //프로필 한줄소개
 
     private String url;
 
@@ -44,4 +45,8 @@ public class Account {
     private boolean studyEnrollmentResultByWeb;
     private boolean studyUpdatedByEmail;
     private boolean studyUpdatedByWeb;
+
+    public void generateEmailCheckToken() {
+        this.emailCheckToken = UUID.randomUUID().toString();
+    }
 }

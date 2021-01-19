@@ -12,8 +12,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //
        http.authorizeRequests()
                .mvcMatchers("/","/login","sign-up","/check-email","/check-email-token",
                        "/email-login","/check-email-login","/login-link").permitAll()
@@ -21,7 +23,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                .anyRequest().authenticated();
     }
 
-    //resource static security필터 무시
+    //resource static은 security필터 적용 안함
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()

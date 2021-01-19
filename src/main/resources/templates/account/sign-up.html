@@ -106,11 +106,12 @@
 
             Array.prototype.filter.call(forms,function (form) {
                 form.addEventListener("submit", function(event) {
-                    if (form.checkValidity() == false) {
+                    if (form.checkValidity() == false) {  //required minlength="3" maxlength="20"....
                         event.preventDefault();
                         event.stopPropagation();
-                        form.classList.add("was-validated");
+
                     }
+                    form.classList.add("was-validated");
                 }, false);
             })
 

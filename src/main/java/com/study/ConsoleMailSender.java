@@ -1,4 +1,4 @@
-package com.study.domain;
+package com.study;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import javax.mail.internet.MimeMessage;
 import java.io.InputStream;
 
+//임시 객체
 @Component
 @Profile("local")
 @Slf4j

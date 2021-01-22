@@ -9,7 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -29,6 +31,45 @@ class AccountControllerTest {
 
     @MockBean
     JavaMailSender javaMailSender;
+
+    @Autowired
+    private  PasswordEncoder passwordEncoder;
+
+
+    @DisplayName("인증 메일 확인 - 입력값 오류")
+    @Test
+    public void checkEmailToken_with_wrong() throws Exception {
+        mockMvc.perform(get("/check-email-token")
+        .param("email","wef")
+                .param("token","wef"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("error"))
+                .andExpect(view().name("account/checked-email"));
+    }
+
+    @Transactional
+    @DisplayName("인증 메일 확인")
+    @Test
+    public void checkEmailToken() throws Exception {
+
+        Account account = Account.builder()
+                .email("test@email.com")
+                .nickname("test")
+                .password("12341234")
+                .build();
+
+       Account newAccount =  accountRepository.save(account);
+       newAccount.generateEmailCheckToken();
+
+        mockMvc.perform(get("/check-email-token")
+                .param("email",newAccount.getEmail())
+                .param("token",newAccount.getEmailCheckToken()))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeDoesNotExist("error"))
+                .andExpect(model().attributeExists("nickname"))
+                .andExpect(model().attributeExists("numberOfUser"))
+                .andExpect(view().name("account/checked-email"));
+    }
 
     @DisplayName("회원 가입 화면 보이는지 테스트")
     @Test

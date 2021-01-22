@@ -6,6 +6,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.validation.Valid;
@@ -19,11 +20,10 @@ public class AccountService {
     private final PasswordEncoder passwordEncoder;
 
 
+    @Transactional
     public void processNewAccount(SignUpForm signUpForm) {
-
         //회원생성
         Account newAccount = saveNewAccount(signUpForm);
-
         //토큰 생성 
         newAccount.generateEmailCheckToken();
         //이메일 전송

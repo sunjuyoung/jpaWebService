@@ -28,7 +28,7 @@ public class Account {
 
     private LocalDateTime joinedAt;
 
-    private String bio; //프로필 한줄소개
+    private String bio;                //프로필 한줄소개
 
     private String url;
 

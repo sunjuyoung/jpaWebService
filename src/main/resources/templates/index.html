@@ -5,19 +5,26 @@
 <th:block th:replace="fragments :: head"></th:block>
 
 <body class="bg-light">
-<!-- nav -->
-<th:block th:replace="fragments.html :: main-nav"></th:block>
+    <!-- nav -->
+    <th:block th:replace="fragments.html :: main-nav"></th:block>
 
-<div class="container">
-    <div class="py-5 text-center">
-        <h2>계정 만들기</h2>
+    <!--경고창-->
+    <div class="alert alert-warning" role="alert" th:if="${account != null && !account.emailVerified}">
+        스터디올레 가입을 완료하려면 <a href="#" th:href="@{/check-email}" class="alert-link">계정 인증 이메일을 확인</a>하세요.
     </div>
-    <div class="row justify-content-center">
 
+
+
+    <div class="container">
+        <div class="py-5 text-center">
+            <h2>계정 만들기</h2>
+        </div>
+        <div class="row justify-content-center">
+
+        </div>
+    <!-- footer -->
+    <th:block th:replace="fragments.html :: footer"></th:block>
     </div>
-<!-- footer -->
-<th:block th:replace="fragments.html :: footer"></th:block>
-</div>
 
 <script type="application/javascript">
     (function() {//input required 검증
@@ -25,7 +32,5 @@
     }());
 </script>
 
-<script src="/node_modules/jquery/dist/jquery.min.js"></script>
-<script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

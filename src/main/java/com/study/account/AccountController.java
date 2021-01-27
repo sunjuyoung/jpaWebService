@@ -70,5 +70,10 @@ public class AccountController {
 
     }
 
+    @GetMapping("/resend-auth-email")
+    public void resendAuthEmail(){
+
+    }
+
 
 }

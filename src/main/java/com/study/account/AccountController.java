@@ -3,13 +3,8 @@ package com.study.account;
 import com.study.domain.Account;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.dom4j.rule.Mode;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,10 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -50,13 +41,14 @@ public class AccountController {
         if(errors.hasErrors()){
             return "account/sign-up";
         }
-
-
         //signUpFormValidator.validate(signUpForm,errors);
         Account account= accountService.processNewAccount(signUpForm);
         accountService.login(account);
         return "redirect:/";
     }
+
+
+
 
     @GetMapping("/check-email-token")
     public String checkEmailToken(String token,String email,Model model){
@@ -93,17 +85,13 @@ public class AccountController {
      */
     @GetMapping("/resend-confirm-email")
     public String resendConfirmEmail(@CurrentUser Account account,Model model){
-
        if(!account.canSendConfirmEmail()){
-
            model.addAttribute("error","인증메일은 1시간에 한번 전송할 수 있습니다.");
            model.addAttribute(account);
            return "account/check-email";
        }
-
         accountService.sendSignUpConfirmEmail(account);
        return "redirect:/";
-
     }
 
 

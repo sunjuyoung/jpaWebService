@@ -51,7 +51,6 @@ public class Account {
     public void generateEmailCheckToken() {
         this.emailCheckToken = UUID.randomUUID().toString();
         this.confirmEmailAt = LocalDateTime.now();
-
     }
 
     public void completeSignUp() {
@@ -60,6 +59,6 @@ public class Account {
     }
 
     public boolean canSendConfirmEmail() {
-        return this.confirmEmailAt.isBefore(LocalDateTime.now().minusHours(1));
+        return this.confirmEmailAt.isBefore(LocalDateTime.now().minusMinutes(3));
     }
 }

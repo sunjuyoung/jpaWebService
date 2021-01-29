@@ -21,6 +21,14 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                        "/email-login","/check-email-login","/login-link").permitAll()
                .mvcMatchers(HttpMethod.GET,"/profile/*").permitAll()
                .anyRequest().authenticated();
+
+       http.formLogin()
+       .loginPage("/login").permitAll();
+
+
+
+       http.logout()
+               .logoutSuccessUrl("/");
     }
 
     //resource static은 security필터 적용 안함

@@ -36,6 +36,8 @@ public class Account {
 
     private String location;            //varchar(255)
 
+    private LocalDateTime confirmEmailAt;
+
     @Lob @Basic(fetch = FetchType.EAGER) //Text
     private String profileImage;
 
@@ -48,10 +50,16 @@ public class Account {
 
     public void generateEmailCheckToken() {
         this.emailCheckToken = UUID.randomUUID().toString();
+        this.confirmEmailAt = LocalDateTime.now();
+
     }
 
     public void completeSignUp() {
         this.emailVerified = true;
         this.joinedAt = LocalDateTime.now();
+    }
+
+    public boolean canSendConfirmEmail() {
+        return this.confirmEmailAt.isBefore(LocalDateTime.now().minusHours(1));
     }
 }
